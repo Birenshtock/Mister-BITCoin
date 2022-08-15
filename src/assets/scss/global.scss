@@ -1,0 +1,33 @@
+// Components
+@import 'cmps/contact-list';
+@import 'cmps/contact-preview';
+@import 'cmps/contact-filter';
+
+//Pages
+@import 'pages/contact-details';
+
+.main-app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .app-header {
+    background-color: rgb(59, 22, 50);
+    color: white;
+    text-align: center;
+  }
+  main {
+    flex-grow: 1;
+  }
+  footer {
+    background-color: rgb(206, 213, 219);
+    padding: 5px;
+    text-align: center;
+  }
+}
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
