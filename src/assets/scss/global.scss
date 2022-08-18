@@ -2,6 +2,8 @@
 @import 'cmps/contact-list';
 @import 'cmps/contact-preview';
 @import 'cmps/contact-filter';
+@import 'cmps/app-header';
+@import 'cmps/nice-button';
 
 //Pages
 @import 'pages/contact-details';
@@ -10,11 +12,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  .app-header {
-    background-color: rgb(59, 22, 50);
-    color: white;
-    text-align: center;
-  }
+
   main {
     flex-grow: 1;
   }

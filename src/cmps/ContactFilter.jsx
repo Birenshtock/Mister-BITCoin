@@ -1,24 +1,26 @@
-import { Component } from 'react'
+import { useEffect, useState } from 'react'
 
-export class ContactFilter extends Component {
-  state = {
+export const ContactFilter = (props) => {
+  const [filterBy, setFilterBy] = useState({
     term: '',
-  }
+  })
 
-  handleChange = ({ target }) => {
+  useEffect(() => {
+    props.onChangeFilter(filterBy)
+  }, [filterBy])
+
+  const handleChange = ({ target }) => {
     const field = target.name
     const value = target.type === 'number' ? +target.value : target.value
-    this.setState({ [field]: value }, () => this.props.onChangeFilter({ ...this.state }))
+    setFilterBy((filterBy) => ({ ...filterBy, [field]: value }))
   }
 
-  render() {
-    const { term } = this.state
-    return (
-      <form className="contact-filter">
-        <section>
-          <input value={term} onChange={this.handleChange} type="text" name="term" placeholder="Search" />
-        </section>
-      </form>
-    )
-  }
+  const { term } = filterBy
+  return (
+    <form className="contact-filter">
+      <section>
+        <input value={term} onChange={handleChange} type="text" name="term" placeholder="Search" />
+      </section>
+    </form>
+  )
 }

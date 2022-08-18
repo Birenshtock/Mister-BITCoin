@@ -1,0 +1,23 @@
+.app-header {
+  background-color: rgb(59, 22, 50);
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .user {
+    flex-grow: 1;
+  }
+  .nav-bar {
+    display: flex;
+    > * {
+      margin-left: 10px;
+      color: white;
+
+      .active {
+        color: aqua;
+        font-weight: 600;
+      }
+    }
+  }
+}

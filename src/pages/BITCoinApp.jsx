@@ -1,53 +1,70 @@
-import { Component } from 'react'
-import { contactService } from '../services/contactService'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+// import { contactService } from '../services/contactService'
 import { ContactList } from '../cmps/ContactList'
-import { ContactDetails } from './ContactDetails'
+// import { ContactDetails } from './ContactDetails'
 import { ContactFilter } from '../cmps/ContactFilter'
+import { Link } from 'react-router-dom'
+import { NiceButton } from '../cmps/NiceButton'
+import { loadContacts, removeContact, setFilterBy } from '../store/actions/contactActions'
 
-export class BITCoinApp extends Component {
-  state = {
-    contacts: null,
-    selectedContactId: null,
-    filterBy: null,
-  }
-  componentDidMount() {
-    this.loadContacts()
-  }
+export const BITCoinApp = (props) => {
+  const contacts = useSelector((state) => state.contactModule.contacts)
 
-  async loadContacts() {
-    try {
-      const contacts = await contactService.getContacts(this.state.filterBy)
-      console.log('contacts', contacts)
-      this.setState({ contacts })
-    } catch (err) {
-      console.log('err:', err)
-    }
-  }
+  const dispatch = useDispatch()
 
-  onChangeFilter = (filterBy) => {
-    this.setState({ filterBy }, this.loadContacts)
+  useEffect(() => {
+    dispatch(loadContacts())
+  }, [])
+
+  // async componentDidMount() {
+  //   props.loadContacts()
+  // }
+
+  const onRemoveContact = async (contactId) => {
+    // await contactService.remove(contactId)
+    // loadContacts()
+    await dispatch(removeContact(contactId))
   }
 
-  onSelectContactId = (contactId) => {
-    console.log('rrr', contactId)
-    this.setState({ selectedContactId: contactId })
+  const onChangeFilter = (filterBy) => {
+    // setState({ filterBy }, loadContacts)
+    dispatch(setFilterBy(filterBy))
+    dispatch(loadContacts())
   }
 
-  render() {
-    const { contacts, selectedContactId } = this.state
-    console.log('ttttttts', contacts)
-    return (
-      <div className="bitcoin-app">
-        {selectedContactId ? (
-          <ContactDetails onBack={() => this.onSelectContactId(null)} contactId={selectedContactId} />
-        ) : (
-          <>
-            <ContactFilter onChangeFilter={this.onChangeFilter} />
+  // render() {
 
-            <ContactList onSelectContactId={this.onSelectContactId} contacts={contacts} />
-          </>
-        )}
-      </div>
-    )
-  }
+  const TextCmp = () => <span>Nice Button</span>
+  const Icon = () => '🎂'
+  return (
+    <div className="bitcoin-app">
+      <NiceButton Icon={Icon} onClick={() => console.log('nice button clicked')}>
+        <TextCmp />
+        <Icon />
+      </NiceButton>
+      <ContactFilter onChangeFilter={onChangeFilter} />
+      <Link to="/contact/edit">Add Contact</Link>
+
+      <ContactList history={props.history} onRemoveContact={onRemoveContact} contacts={contacts} />
+    </div>
+  )
+  // }
 }
+
+// const mapStateToProps = (state) => {
+//   return {
+//     contacts: state.contactModule.contacts,
+//   }
+// }
+
+// const mapDispatchToProps = {
+//   loadContacts,
+//   removeContact,
+//   setFilterBy,
+//   // spendBalance,
+// }
+
+// export const BITCoinApp = connect(mapStateToProps, mapDispatchToProps)(_BITCoinApp)
+
+// export const BITCoinApp = connect()(_BITCoinApp)

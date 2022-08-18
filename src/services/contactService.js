@@ -1,9 +1,9 @@
 export const contactService = {
     getContacts,
     getContactById,
-    // deleteContact,
-    // saveContact,
-    // getEmptyContact
+    deleteContact,
+    saveContact,
+    getEmptyContact
 }
 
 
